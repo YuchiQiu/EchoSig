@@ -19,4 +19,4 @@ python3 train_causal.py iPSC
 Refer to `tutorial/iPSC.ipynb` for detailed analysis.
 
 # Reference
-Qiu, Y.*#, Sha, Y.*, & Nie, Q#. (2026). Dissecting multicellular temporal causal signaling flows. (submitted)
+Yuchi Qiu\*#, Yutong Sha\*, & Qing Nie#. Dissecting multicellular temporal causal signaling flows (2026). (submitted)
