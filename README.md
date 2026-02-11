@@ -1,5 +1,5 @@
 # EchoSig: Dissecting multicellular temporal causal signaling flows 
-![overview.pdf](https://github.com/YuchiQiu/EchoSig/blob/main/overview.pdf)
+![overview.png](https://github.com/YuchiQiu/EchoSig/blob/main/overview.png)
 
 **EchoSig** is a deep learning–enabled temporal causal framework for reconstructing multicellular signaling flows from time-series scRNA-seq and spatial transcriptomics data. It builds upon **TIGON+**, a fast and robust dynamical model that infers continuous cellular trajectories and time-resolved gene regulatory networks (GRNs). EchoSig models cell–cell communication (CCC) by estimating signaling strengths and signaling propagation times to capture ligand-associated transmission delays. By integrating intercellular CCC with intracellular GRNs, EchoSig uncovers hierarchical and multiscale causal interaction networks underlying dynamic signaling flows.
 
