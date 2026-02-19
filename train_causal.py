@@ -19,7 +19,8 @@ from sklearn.cluster import KMeans
 
 
 if __name__=="__main__":
-    dataset = 'iPSC'
+    dataset = sys.argv[1]
+    # dataset = 'iPSC'
     species='human'
  
     config,_,time_scale,time_unit,n_fates,num_sample,time,time_GRN,time_float,lag_list,max_lag, source_id_lst,target_id_lst = get_configs(dataset)
@@ -60,7 +61,7 @@ if __name__=="__main__":
     ################################################################################################
 
     fate_idx, z_fate, z_original_fate = cluster_trajectory(n_fates=n_fates,z=z,z_original_norm=z_original_norm)
-
+    cell_name={1:'Mes', 0:'End'}
    
     
     df_LR_filter,df_RSPG_filter,df_LRSPG,LR_index,LRSPG_index, gene_list=EchoSig.CCC.filter_L_R_SPG(adata,species=species,signaling_type=None)
@@ -79,6 +80,7 @@ if __name__=="__main__":
              z_original=z_original,
              z_original_norm=z_original_norm,
              fate_idx=fate_idx,
+             cell_name=cell_name,
              z_fate = z_fate,
              z_original_fate = z_original_fate,
              gene_list=gene_list,
@@ -107,7 +109,7 @@ if __name__=="__main__":
         df_CCC = EchoSig.CCC.trajCCC(source_id,target_id,z_original_fate,time, lag_list,max_lag,
                              df_LRSPG,gene_list,
                              save_dir=save_sub_dir,
-                             curve_thred=0.2,time_scale=1, # time and time_GRN were scaled in previous lines to 'h'. Here we take `time_scale=1`
+                             curve_thred=0.2,p_thred=0.01,time_scale=1, # time and time_GRN were scaled in previous lines to 'h'. Here we take `time_scale=1`
                              time_unit=time_unit) 
 
 

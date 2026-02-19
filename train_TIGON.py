@@ -15,16 +15,9 @@ from EchoSig.utility import read_config_file
 
 if __name__=="__main__":
     dataset = sys.argv[1]
-    seed=2
-    n_layers=3
-    dim_hiddens=64
-    device_id=0 # cuda device index
+    # dataset = 'iPSC'
     config = read_config_file('configs/config_'+dataset+'.yaml')
-    config['TIGON']['model']['n_layers']=n_layers
-    config['TIGON']['model']['dim_hiddens']=dim_hiddens
-    config['seed']=seed
-    config['device'] = 'cuda:'+str(device_id)
-
+    seed=config['seed']
     save_dir = config['save_dir']
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
@@ -65,8 +58,7 @@ if __name__=="__main__":
     embedding=model_ae.emb(X)
     adata.obsm['ae']=embedding
     adata.write(os.path.join(save_dir,'adata.h5ad'))
-    # EchoSig.pl.embedding_trajectory(adata,
-    #                         palette='Set2')
+
     torch.save({'config':config},
             os.path.join(save_dir,'config.pth'))
     torch.save({'ae_state_dict':model_ae.state_dict(),
@@ -87,13 +79,6 @@ if __name__=="__main__":
     func = EchoSig.TIGON2.UOT(in_out_dim=dim_latent, 
                           **config['TIGON']['model'],
                           odesolver=config['TIGON']['odesolver'])
-    # options = src.TIGON.diffeq_args()
     trainer = EchoSig.TIGON2.trainer.Trainer(func,device=config['device'],**config['TIGON']['trainer'])
     time_dic =  trainer.train(data_train,time_float,save_dir=save_dir)
-
-    # t=np.linspace(np.array(time_float).max(),np.array(time_float).min(),51)
-    # z = func.trajectory(100,t,
-    #                        0,data_train,sigma,device).detach().cpu().numpy()
-    # EchoSig.pl.embedding_trajectory(adata,z,save=save_dir+'emb_trajectory.pdf',
-    #                             palette='Set2')
 
