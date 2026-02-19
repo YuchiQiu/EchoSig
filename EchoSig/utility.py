@@ -257,13 +257,6 @@ def get_configs(dataset,focus_group=None):
         lag_list = np.linspace(-800,800,801).astype(int)
         max_lag = 0.06
 
-        ## d3 data
-        ## reverse integration
-        # time = np.linspace(time_float[0],time_float[-1],4320+1) # one time step is 1 min
-        # time_GRN = np.linspace(time_float[0],time_float[-1],18+1)
-
-        # lag_list = np.linspace(-800,800,801).astype(int) # 800: this needs to exceed range of `max_lag`*len(time). So we will conclude no causal effect if lag hits maximal (800 this case)
-        # max_lag = 0.16  # maximal allowed lag: `max_lag`*len(time)
         
     elif dataset == 'iPSC':
         time_scale=24
@@ -277,8 +270,7 @@ def get_configs(dataset,focus_group=None):
         config['TIGON']['model']['n_layers']=n_layers
         config['TIGON']['model']['dim_hiddens']=dim_hiddens
         config['seed']=seed
-        # save_dir=config['save_dir']+'seed='+str(seed)+'/n_lay='+str(n_layers)+'_'+'n_hid='+str(dim_hiddens)+'/'
-        # config['save_dir']=save_dir 
+
         save_CCC_dir=dataset+'/'
         time_float=config['Time']['float']
         time = np.linspace(time_float[0],time_float[-1],4320+1) # one time step is 1 min
@@ -292,19 +284,11 @@ def get_configs(dataset,focus_group=None):
         time_unit='h'
         n_fates = None
         num_sample = None
-        # seed=42
-        # dim_latent=4
-        # n_layers=3
-        # dim_hiddens=64
         config = read_config_file('configs/config_MOSTA.yaml')
-        # config['TIGON']['model']['n_layers']=n_layers
-        # config['TIGON']['model']['dim_hiddens']=dim_hiddens
+
         dim_latent =config['AE']['model']['dim_latent']
         seed = config['seed']
-        # save_dir=config['save_dir']+'_seed='+str(seed)+'/n_lay='+str(n_layers)+'_'+'n_hid='+str(dim_hiddens)+'/'
-        # save_dir=config['save_dir']+'/AE_n_latent='+str(dim_latent)+'/seed='+str(seed)+'/'
 
-        # config['save_dir']=save_dir 
         if focus_group is not None:
             save_CCC_dir=dataset+'/'+focus_group+'/'
         else:
@@ -369,12 +353,12 @@ def get_dataset_config(dataset,focus_group=None):
         fate_list=None
         FDR=0.05
         species='mouse'
-    os.makedirs(fig_save_dir,exist_ok=True)
+    # os.makedirs(fig_save_dir,exist_ok=True)
 
     stat_test_map = {'ftest':'F-test',
                     'chi2':'Chi2 test',
                     }
-    cellchat=pd.read_csv('src/CCC/CellChatDB/CellChatDB.ligrec.'+species+'.csv',index_col=0)
+    cellchat=pd.read_csv('EchoSig/CCC/CellChatDB/CellChatDB.ligrec.'+species+'.csv',index_col=0)
     signal_type_map = dict(zip(cellchat.iloc[:,2], cellchat.iloc[:,3]))
     return fig_save_dir,fate_list,FDR,species,stat_test_map, cellchat,signal_type_map
 
