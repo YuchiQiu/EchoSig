@@ -28,7 +28,7 @@ python3 train_causal.py $dataset
 Parameters for causal inference are given in `EchoSig.utility.get_configs`. For example, `n_fates` determines number of cell fates from `num_sample` trajectories. In `train_causal.py`, `cell_name` is given a dictionary mapping cell fate index to its cell fate annotation. It needs to be defined before running the script.
 
 ## STEP 3: Downstream network aggregation and visualization
-Refer to `tutorial/iPSC.ipynb` for detailed analysis.
+Refer to `analysis.ipynb` for a demo analysis.
 
 # Output
 All outputs are saved under `Output/$dataset/`.
