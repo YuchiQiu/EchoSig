@@ -1,0 +1,12 @@
+name: EchoSig
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pytorch>=2.4,<3
+  - pytorch-cuda=12.4
+  - pip:
+      - -e .

@@ -1,0 +1,57 @@
+device: 'cuda'
+seed: 42
+input_h5ad: 'Input/A549_TGFB1.h5ad'
+save_dir: 'Output/EMT/'
+preprocessing:
+  n_genes: 3000
+Time:
+  str: ['0d', '8h', '1d', '3d','7d']
+  float: [0, 0.1, 0.3, 0.9, 2.1]
+  # str: ['7d', '3d', '1d', '8h', '0d']
+  # float: [2.1, 0.9, 0.3, 0.1, 0.]
+AE:
+  model:
+    model_name: 'VAE'
+    n_layers: 1
+    dim_hiddens: 50
+    dim_latent: 3
+    dropout: 0.2
+    norm: False
+    activation: 'relu'
+  trainer:
+    test_size: 0.2
+    batch_size: 256
+    lr: 0.001
+    weight_decay: 0.
+    max_epoch: 500
+    beta: 1.0
+    early_stopping: True
+    tol: 0.
+    patience: 30
+EchoSigTraj:
+  model:
+    dim_hiddens: 16
+    n_layers: 2
+    activation: 'tanh'
+  trainer:
+    lr: 0.001
+    weight_decay: 0.
+    max_epoch: 5000
+    batch_size: 100
+    tol: 0.
+    patience: 30
+    # sigma: 0.001
+    sigma: 0
+    gamma: 0.1 #0.1
+    alpha_wfr: 1.
+    l_mass: 10.
+  odesolver:
+    method: 'dopri5' #'dopri5'; #'rk4' 'euler'
+    rtol: 0.001
+    atol: 0.00001
+    #   lr_scheduler_params:
+    #   mode: 'min'
+    #   factor: 0.5
+    #   patience: 100
+    #   verbose: False
+

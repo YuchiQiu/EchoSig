@@ -1,0 +1,58 @@
+device: 'cuda'
+seed: 9
+input_h5ad: 'Input/iPSC.h5ad'
+save_dir: 'Output/iPSC/'
+preprocessing:
+  n_genes: 96
+Time:
+  # str: ['Day0', 'Day1', 'Day1.5', 'Day2', 'Day2.5','Day3','Day4']
+  # float: [0, 1., 1.5, 2., 2.5, 3., 4.]
+  str: ['Day3','Day2.5','Day2','Day1.5','Day1','Day0',]
+  float: [3.,2.5,2.,1.5,1.,0.]
+AE:
+  model:
+    model_name: 'VAE'
+    n_layers: 1
+    dim_hiddens: 50
+    dim_latent: 4
+    dropout: 0.2
+    norm: False
+    activation: 'relu'
+  trainer:
+    test_size: 0.2
+    batch_size: 256
+    lr: 0.001
+    weight_decay: 0.
+    max_epoch: 500
+    beta: 1.0
+    early_stopping: True
+    tol: 0.
+    patience: 30
+EchoSigTraj:
+  model:
+    dim_hiddens: 64
+    n_layers: 3
+    activation: 'tanh'
+  trainer:
+    lr: 0.001
+    weight_decay: 0.
+    max_epoch: 5000
+    batch_size: 100
+    tol: 0.
+    patience: 30
+    # sigma: 0.001
+    sigma: 0
+    gamma: 0.1
+    alpha_wfr: 1
+    l_mass: 1.
+  odesolver:
+    method: 'dopri5' #dopri5'; #'rk4' #'euler'
+    rtol: 0.001
+    atol: 0.00001
+
+      
+    # lr_scheduler_params:
+    #   mode: 'min'
+    #   factor: 0.5
+    #   patience: 100
+    #   verbose: False
